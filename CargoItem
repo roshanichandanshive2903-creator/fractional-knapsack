@@ -1,0 +1,7 @@
+import java.util.*; class CargoItem
+{ double weight, value, ratio; CargoItem(double weight, double value)
+{ this.weight = weight;
+this.value = value; this.ratio = value / weight; // value per unit weight } } public class CargoLoading
+{ public static void main(String[] args)
+{ Scanner sc = new Scanner(System.in); System.out.print("Enter number of cargo items: "); int n = sc.nextInt(); CargoItem[] items = new CargoItem[n]; System.out.println("\nEnter weight and value (profit) of each item:"); for (int i = 0; i < n; i++){ System.out.print("Item " + (i + 1) + " weight: "); double w = sc.nextDouble(); System.out.print("Item " + (i + 1) + " value: "); double v = sc.nextDouble(); items[i] = new CargoItem(w, v);
+} System.out.print("\nEnter maximum capacity of the truck: "); double capacity = sc.nextDouble(); Arrays.sort(items, (a, b) -> Double.compare(b.ratio, a.ratio)); double totalValue = 0.0; double remaining = capacity; System.out.println("\n--- Cargo Loading Details ---"); for (CargoItem item : items) { if (item.weight <= remaining) { totalValue += item.value; remaining -= item.weight; System.out.println("Loaded FULL item (Weight: " + item.weight + ", Value: " + item.value + ")"); } else { double fraction = remaining / item.weight; totalValue += item.value * fraction; System.out.println("Loaded " + (fraction * 100) + "% of item (Weight: " + remaining + ", Value: " + (item.value * fraction) + ")"); remaining = 0; break; } } System.out.println("\nMaximum total value in truck = " + totalValue); sc.close(); } }
